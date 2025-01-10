@@ -2,8 +2,9 @@ name: Run tests
 
 on:
   push:
-    branches: [config/ci]
-
+    branches:
+      - config/ci
+      
 jobs:
   pytest:
     runs-on: ubuntu-latest
@@ -49,9 +50,11 @@ jobs:
   
   outdated_dependencies:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         python-version: ['3.11', '3.12']
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
