@@ -2,8 +2,9 @@ name: Run tests
 
 on:
   push:
-    branches:
-      - config/ci
+    branches: [config/ci]
+  pull_request:
+    branches: [config/ci]
 
 jobs:
   pytest:
@@ -26,7 +27,7 @@ jobs:
 
     - uses: actions/setup-python@v5
       with:
-        python-version: '3.11'
+        python-version: '3.12'
 
     - name: Prepare environment
       run: |
@@ -50,15 +51,12 @@ jobs:
   
   outdated_dependencies:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        python-version: ['3.11', '3.12']
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
     - name: Check for outdated dependencies
       run: |
         pip list --outdated
